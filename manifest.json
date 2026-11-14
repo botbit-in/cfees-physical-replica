@@ -1,0 +1,593 @@
+{
+  "project": "DRDO CFES (CAFES) 24\" × 22\" Physical Replica — FDM 3D Print & 8mm Groove-Fit Acrylic Pack",
+  "outerRoomSize": "24.0\" Length (609.6 mm) × 22.0\" Width (558.8 mm) × 14.0\" Height (355.6 mm)",
+  "blackBaseSize": "26.0\" × 24.0\" (660.4 mm × 609.6 mm) × 8.0 mm Black Cast Acrylic (1.0\" margin all around)",
+  "wallSpec": "Left, Right & Back Walls in 8.0 mm Cast Acrylic, Groove-Fitted (8.2 mm slot) + Bind-Adhesive Layer Sealed",
+  "owner": "Krishna Kumar (FDM Printing & Physical Assembly Lead)",
+  "acrylicFiles": [
+    {
+      "name": "CFES_8mm_Acrylic_OptionA_CO2_Laser_ThroughSlot_1to1_mm.dxf",
+      "type": "DXF (1:1 mm)",
+      "desc": "Standard CO2 Laser Through-Slot Mortise & Tenon Groove-Lock (Zero CNC needed!)"
+    },
+    {
+      "name": "CFES_8mm_Acrylic_OptionA_CO2_Laser_ThroughSlot_1to1_mm.svg",
+      "type": "SVG (1:1 mm)",
+      "desc": "Vector Preview & Laser Cut Sheet (Option A: Through-Slot Groove-Lock)"
+    },
+    {
+      "name": "CFES_8mm_Acrylic_OptionB_CNC_5mm_BlindGroove_1to1_mm.dxf",
+      "type": "DXF (1:1 mm)",
+      "desc": "CNC Router 5.0 mm Deep Continuous Blind U-Groove Channel in 8mm Black Base"
+    },
+    {
+      "name": "CFES_8mm_Acrylic_OptionB_CNC_5mm_BlindGroove_1to1_mm.svg",
+      "type": "SVG (1:1 mm)",
+      "desc": "Vector Preview & CNC Sheet (Option B: 5mm Deep Blind Groove)"
+    }
+  ],
+  "fdmParts": [
+    {
+      "id": "01",
+      "stlName": "01_Table_Pedestal_Cabinet_Print2x.stl",
+      "objName": "01_Table_Pedestal_Cabinet_Print2x.obj",
+      "tris": 560,
+      "sizeMm": [
+        92,
+        141,
+        115
+      ],
+      "sizeIn": [
+        3.62,
+        5.55,
+        4.53
+      ],
+      "estGrams": 358,
+      "title": "Under-Table Pedestal Cabinet (Print 2×)",
+      "qty": 2,
+      "color": "#94a3b8",
+      "filament": "Industrial Grey PLA/PETG",
+      "bedFit": "Any Printer (≥150×150 mm)",
+      "supportFree": "100% Zero Supports (45° chamfered plinth + flat Z=0 feet)",
+      "scenePlacements": [
+        {
+          "pos": [
+            -112,
+            0,
+            48
+          ],
+          "rotY": 0
+        },
+        {
+          "pos": [
+            112,
+            0,
+            48
+          ],
+          "rotY": 0
+        }
+      ]
+    },
+    {
+      "id": "02A",
+      "stlName": "02A_Table_Top_Left_Half_Keyed.stl",
+      "objName": "02A_Table_Top_Left_Half_Keyed.obj",
+      "tris": 120,
+      "sizeMm": [
+        170,
+        156,
+        12.5
+      ],
+      "sizeIn": [
+        6.69,
+        6.14,
+        0.49
+      ],
+      "estGrams": 80,
+      "title": "Test Table Top — Left Keyed Half",
+      "qty": 1,
+      "color": "#f8fafc",
+      "filament": "Matte White PLA/PETG",
+      "bedFit": "Any Printer (≥180×180 mm)",
+      "supportFree": "100% Flat Slab on Z=0 + Center Keyway",
+      "scenePlacements": [
+        {
+          "pos": [
+            -85,
+            110,
+            48
+          ],
+          "rotY": 0
+        }
+      ]
+    },
+    {
+      "id": "02B",
+      "stlName": "02B_Table_Top_Right_Half_Keyed.stl",
+      "objName": "02B_Table_Top_Right_Half_Keyed.obj",
+      "tris": 120,
+      "sizeMm": [
+        177.8,
+        156,
+        12.5
+      ],
+      "sizeIn": [
+        7,
+        6.14,
+        0.49
+      ],
+      "estGrams": 83,
+      "title": "Test Table Top — Right Keyed Half",
+      "qty": 1,
+      "color": "#f8fafc",
+      "filament": "Matte White PLA/PETG",
+      "bedFit": "Any Printer (≥185×180 mm)",
+      "supportFree": "100% Flat Slab on Z=0 + Interlock Tenons",
+      "scenePlacements": [
+        {
+          "pos": [
+            85,
+            110,
+            48
+          ],
+          "rotY": 0
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "stlName": "03_Left_Finned_Induction_Motor.stl",
+      "objName": "03_Left_Finned_Induction_Motor.obj",
+      "tris": 724,
+      "sizeMm": [
+        105,
+        68,
+        84
+      ],
+      "sizeIn": [
+        4.13,
+        2.68,
+        3.31
+      ],
+      "estGrams": 144,
+      "title": "Left Finned Industrial Electric Motor",
+      "qty": 1,
+      "color": "#5b8db8",
+      "filament": "Steel Blue PLA/PETG",
+      "bedFit": "Any Printer (≥120×120 mm)",
+      "supportFree": "100% Zero Supports (45° cradle saddle on Z=0)",
+      "scenePlacements": [
+        {
+          "pos": [
+            -106,
+            120,
+            48
+          ],
+          "rotY": 0
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "stlName": "04_Right_Coupled_Generator_Unit.stl",
+      "objName": "04_Right_Coupled_Generator_Unit.obj",
+      "tris": 556,
+      "sizeMm": [
+        104,
+        68,
+        85
+      ],
+      "sizeIn": [
+        4.09,
+        2.68,
+        3.35
+      ],
+      "estGrams": 144,
+      "title": "Right Coupled Generator / Load Unit",
+      "qty": 1,
+      "color": "#94a3b8",
+      "filament": "Silver / Blue PLA/PETG",
+      "bedFit": "Any Printer (≥120×120 mm)",
+      "supportFree": "100% Zero Supports (45° cradle saddle on Z=0)",
+      "scenePlacements": [
+        {
+          "pos": [
+            106,
+            120,
+            48
+          ],
+          "rotY": 0
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "stlName": "05_Center_Yellow_Test_Box_Body.stl",
+      "objName": "05_Center_Yellow_Test_Box_Body.obj",
+      "tris": 252,
+      "sizeMm": [
+        78,
+        60,
+        48
+      ],
+      "sizeIn": [
+        3.07,
+        2.36,
+        1.89
+      ],
+      "estGrams": 54,
+      "title": "Center Yellow Torque/Fire Test Box (Hollow Body)",
+      "qty": 1,
+      "color": "#f59e0b",
+      "filament": "Safety Amber / Yellow PLA",
+      "bedFit": "Any Printer (≥100×100 mm)",
+      "supportFree": "100% Open-Top Hollow Shell on Z=0",
+      "scenePlacements": [
+        {
+          "pos": [
+            0,
+            122.5,
+            48
+          ],
+          "rotY": 0
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "stlName": "06_Center_Yellow_Box_Snap_Lid.stl",
+      "objName": "06_Center_Yellow_Box_Snap_Lid.obj",
+      "tris": 144,
+      "sizeMm": [
+        72,
+        62,
+        8
+      ],
+      "sizeIn": [
+        2.83,
+        2.44,
+        0.31
+      ],
+      "estGrams": 9,
+      "title": "Center Test Box Snap-Fit Lid & Fault Dome",
+      "qty": 1,
+      "color": "#fbbf24",
+      "filament": "Safety Amber / Yellow PLA",
+      "bedFit": "Any Printer (≥100×100 mm)",
+      "supportFree": "100% Flat Plate on Z=0",
+      "scenePlacements": [
+        {
+          "pos": [
+            0,
+            170.5,
+            48
+          ],
+          "rotY": 0
+        }
+      ]
+    },
+    {
+      "id": "07",
+      "stlName": "07_Drive_Shaft_Flanged_Coupling_Print2x.stl",
+      "objName": "07_Drive_Shaft_Flanged_Coupling_Print2x.obj",
+      "tris": 432,
+      "sizeMm": [
+        27,
+        27,
+        18
+      ],
+      "sizeIn": [
+        1.06,
+        1.06,
+        0.71
+      ],
+      "estGrams": 8,
+      "title": "Flanged Drive Shaft Coupling (Print 2×)",
+      "qty": 2,
+      "color": "#38bdf8",
+      "filament": "Cyan / Silver PLA",
+      "bedFit": "Any Printer (≥60×60 mm)",
+      "supportFree": "100% Vertical Print with 45° Conical Flange Chamfer",
+      "scenePlacements": [
+        {
+          "pos": [
+            -48,
+            158,
+            48
+          ],
+          "rotY": 0
+        },
+        {
+          "pos": [
+            48,
+            158,
+            48
+          ],
+          "rotY": 0
+        }
+      ]
+    },
+    {
+      "id": "08",
+      "stlName": "08_Rear_Gauge_Console_Speed_Torque_Power.stl",
+      "objName": "08_Rear_Gauge_Console_Speed_Torque_Power.obj",
+      "tris": 1140,
+      "sizeMm": [
+        216,
+        142,
+        52.5
+      ],
+      "sizeIn": [
+        8.5,
+        5.59,
+        2.07
+      ],
+      "estGrams": 386,
+      "title": "Rear 3-Dial Gauge Console (Speed / Torque / Power)",
+      "qty": 1,
+      "color": "#e2e8f0",
+      "filament": "White / Slate PLA",
+      "bedFit": "Standard 220×220 mm Bed (216×142 mm)",
+      "supportFree": "100% Printed Flat on Back (Upward Dials & Needles)",
+      "scenePlacements": [
+        {
+          "pos": [
+            0,
+            71,
+            -46
+          ],
+          "rotX": -1.5707963267948966
+        }
+      ]
+    },
+    {
+      "id": "09A",
+      "stlName": "09A_Tall_Power_Cabinet_Lower_Half.stl",
+      "objName": "09A_Tall_Power_Cabinet_Lower_Half.obj",
+      "tris": 120,
+      "sizeMm": [
+        94,
+        84.1,
+        132
+      ],
+      "sizeIn": [
+        3.7,
+        3.31,
+        5.2
+      ],
+      "estGrams": 250,
+      "title": "Tall Power Supply Cabinet — Lower Louvered Section",
+      "qty": 1,
+      "color": "#94a3b8",
+      "filament": "Industrial Grey PLA/PETG",
+      "bedFit": "Any Printer (≥120×120 mm)",
+      "supportFree": "100% Upright or Flat-Back Print",
+      "scenePlacements": [
+        {
+          "pos": [
+            -215,
+            0,
+            -195
+          ],
+          "rotY": 0
+        }
+      ]
+    },
+    {
+      "id": "09B",
+      "stlName": "09B_Tall_Power_Cabinet_Upper_Half.stl",
+      "objName": "09B_Tall_Power_Cabinet_Upper_Half.obj",
+      "tris": 96,
+      "sizeMm": [
+        98,
+        94,
+        133
+      ],
+      "sizeIn": [
+        3.86,
+        3.7,
+        5.24
+      ],
+      "estGrams": 294,
+      "title": "Tall Power Supply Cabinet — Upper Indicator Section",
+      "qty": 1,
+      "color": "#94a3b8",
+      "filament": "Industrial Grey PLA/PETG",
+      "bedFit": "Any Printer (≥120×120 mm)",
+      "supportFree": "100% Zero Supports on Z=0",
+      "scenePlacements": [
+        {
+          "pos": [
+            -215,
+            126,
+            -195
+          ],
+          "rotY": 0
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "stlName": "10_RearRight_DoubleDoor_Bench_Cabinet.stl",
+      "objName": "10_RearRight_DoubleDoor_Bench_Cabinet.obj",
+      "tris": 72,
+      "sizeMm": [
+        138,
+        86,
+        108
+      ],
+      "sizeIn": [
+        5.43,
+        3.38,
+        4.25
+      ],
+      "estGrams": 307,
+      "title": "Rear-Right Double-Door Lab Bench Cabinet",
+      "qty": 1,
+      "color": "#cbd5e1",
+      "filament": "Light Grey / White PLA",
+      "bedFit": "Any Printer (≥160×120 mm)",
+      "supportFree": "100% Zero Supports on Z=0",
+      "scenePlacements": [
+        {
+          "pos": [
+            196,
+            0,
+            -196
+          ],
+          "rotY": 0
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "stlName": "11_Oscilloscope_and_DC_Power_Stack.stl",
+      "objName": "11_Oscilloscope_and_DC_Power_Stack.obj",
+      "tris": 144,
+      "sizeMm": [
+        92,
+        67.3,
+        74
+      ],
+      "sizeIn": [
+        3.62,
+        2.65,
+        2.91
+      ],
+      "estGrams": 110,
+      "title": "Digital Oscilloscope & 24V DC Supply Stack",
+      "qty": 1,
+      "color": "#cbd5e1",
+      "filament": "Cool Grey PLA",
+      "bedFit": "Any Printer (≥120×100 mm)",
+      "supportFree": "100% Zero Supports on Z=0",
+      "scenePlacements": [
+        {
+          "pos": [
+            196,
+            108,
+            -196
+          ],
+          "rotY": 0
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "stlName": "12_BackWall_Split_AC_and_Wall_Clock.stl",
+      "objName": "12_BackWall_Split_AC_and_Wall_Clock.obj",
+      "tris": 544,
+      "sizeMm": [
+        190,
+        52,
+        25
+      ],
+      "sizeIn": [
+        7.48,
+        2.05,
+        0.98
+      ],
+      "estGrams": 59,
+      "title": "Back-Wall Split AC Unit & Lab Clock Set",
+      "qty": 1,
+      "color": "#f8fafc",
+      "filament": "White / Charcoal PLA",
+      "bedFit": "Standard 220×220 mm Bed (195×55 mm)",
+      "supportFree": "100% Flat Back on Z=0 (Bond to Back Acrylic Wall)",
+      "scenePlacements": [
+        {
+          "pos": [
+            88,
+            292,
+            -268
+          ],
+          "rotX": 1.5707963267948966
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "stlName": "13_SideWall_Window_Frame_Print2x.stl",
+      "objName": "13_SideWall_Window_Frame_Print2x.obj",
+      "tris": 48,
+      "sizeMm": [
+        146,
+        104,
+        6
+      ],
+      "sizeIn": [
+        5.75,
+        4.09,
+        0.24
+      ],
+      "estGrams": 22,
+      "title": "Side-Wall Observation Window Bezel (Print 2×)",
+      "qty": 2,
+      "color": "#cbd5e1",
+      "filament": "Silver / Grey PLA",
+      "bedFit": "Any Printer (≥160×120 mm)",
+      "supportFree": "100% Flat Frame on Z=0",
+      "scenePlacements": [
+        {
+          "pos": [
+            -293,
+            195,
+            15
+          ],
+          "rotZ": -1.5707963267948966,
+          "rotY": 1.5707963267948966
+        },
+        {
+          "pos": [
+            293,
+            195,
+            15
+          ],
+          "rotZ": 1.5707963267948966,
+          "rotY": -1.5707963267948966
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "stlName": "14_Acrylic_90deg_Corner_Bonding_Gussets_Print4x.stl",
+      "objName": "14_Acrylic_90deg_Corner_Bonding_Gussets_Print4x.obj",
+      "tris": 28,
+      "sizeMm": [
+        44,
+        44,
+        26
+      ],
+      "sizeIn": [
+        1.73,
+        1.73,
+        1.02
+      ],
+      "estGrams": 12,
+      "title": "90° Acrylic Wall Bonding Corner Gussets (Print 4×)",
+      "qty": 4,
+      "color": "#1e293b",
+      "filament": "Matte Black PETG/PLA",
+      "bedFit": "Any Printer (≥100×100 mm)",
+      "supportFree": "100% Flat Extrusion on Z=0",
+      "scenePlacements": [
+        {
+          "pos": [
+            -274,
+            2,
+            -252
+          ],
+          "rotY": 0
+        },
+        {
+          "pos": [
+            274,
+            2,
+            -252
+          ],
+          "rotY": -1.5707963267948966
+        }
+      ]
+    }
+  ]
+}

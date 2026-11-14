@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>DRDO CFES 24"×22" Physical Replica — 8mm Groove-Fit Acrylic &amp; Modular FDM 3D Print Hub | autoAbode</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
+    body, html {
+      width: 100%; height: 100%; overflow: hidden;
+      background: radial-gradient(circle at 50% 35%, #162033 0%, #0b1120 72%, #020617 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #f8fafc;
+    }
+    #canvas-container { width: 100vw; height: 100vh; position: relative; }
+
+    /* Ultra-Slim Clean Floating Top Bar (92%+ Unobstructed Mobile & Laptop FOV) */
+    .header {
+      position: fixed; top: 8px; left: 10px; right: 10px; z-index: 30;
+      padding: 6px 12px; border-radius: 12px;
+      background: rgba(9, 15, 29, 0.78);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(56, 189, 248, 0.30);
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .title {
+      font-size: 12.5px; font-weight: 800; color: #f8fafc; letter-spacing: 0.2px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 48vw;
+    }
+    .header-actions { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
+
+    /* Collapsible BOM, Specs & Individual STL/OBJ/DXF Drawer (Collapsed by Default!) */
+    .side-panel {
+      position: fixed; top: 52px; left: 10px; z-index: 40;
+      width: min(390px, calc(100vw - 20px)); max-height: calc(100vh - 110px); overflow-y: auto;
+      background: rgba(9, 15, 29, 0.95);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      border-radius: 14px; padding: 12px;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.70);
+      transition: transform 0.22s ease, opacity 0.22s ease;
+    }
+    .side-panel.collapsed { transform: translateX(-115%); opacity: 0; pointer-events: none; }
+    .panel-title {
+      font-size: 11px; font-weight: 800; color: #38bdf8; text-transform: uppercase;
+      letter-spacing: 0.6px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
+    .spec-card {
+      background: rgba(30, 41, 59, 0.78); border: 1px solid rgba(71, 85, 105, 0.55);
+      border-radius: 8px; padding: 6px 8px;
+    }
+    .spec-k { font-size: 9px; color: #94a3b8; text-transform: uppercase; font-weight: 700; }
+    .spec-v { font-size: 11px; color: #f8fafc; font-weight: 800; margin-top: 1px; }
+
+    .sec-head {
+      font-size: 10.5px; font-weight: 800; color: #fbbf24; text-transform: uppercase;
+      margin: 10px 0 6px; letter-spacing: 0.4px;
+    }
+    .dl-list { display: flex; flex-direction: column; gap: 5px; }
+    .dl-card {
+      background: rgba(30, 41, 59, 0.68); border: 1px solid rgba(71, 85, 105, 0.55);
+      border-radius: 8px; padding: 6px 8px; display: flex; justify-content: space-between; align-items: center; gap: 6px;
+    }
+    .dl-info { min-width: 0; flex: 1; }
+    .dl-name { font-size: 10.5px; font-weight: 800; color: #f8fafc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dl-meta { font-size: 9.5px; color: #94a3b8; margin-top: 1px; }
+    .dl-btns { display: flex; gap: 4px; flex-shrink: 0; }
+    .mini-btn {
+      background: #1e293b; color: #38bdf8; border: 1px solid #38bdf8;
+      padding: 3px 6px; border-radius: 6px; font-size: 9.5px; font-weight: 800; text-decoration: none;
+    }
+    .mini-btn.obj { color: #fbbf24; border-color: #fbbf24; }
+    .mini-btn.dxf { color: #34d399; border-color: #34d399; }
+
+    /* Modal for 8mm Acrylic Laser Blueprint Preview */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 60; background: rgba(2, 6, 23, 0.88);
+      display: none; align-items: center; justify-content: center; padding: 16px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-card {
+      background: #0f172a; border: 1px solid #38bdf8; border-radius: 14px;
+      max-width: 1060px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 14px;
+    }
+
+    /* Compact Single-Row Bottom Pill Dock */
+    .controls {
+      position: fixed; bottom: 8px; left: 50%; transform: translateX(-50%);
+      z-index: 30; display: flex; gap: 5px; flex-wrap: nowrap; overflow-x: auto;
+      max-width: 96vw; scrollbar-width: none; -ms-overflow-style: none;
+      background: rgba(9, 15, 29, 0.84);
+      padding: 5px 8px; border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.48);
+    }
+    .controls::-webkit-scrollbar { display: none; }
+    .btn {
+      background: rgba(30, 41, 59, 0.92); color: #e2e8f0; border: 1px solid #475569;
+      padding: 5px 9px; border-radius: 999px; font-size: 10.5px; font-weight: 700;
+      cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; flex-shrink: 0;
+    }
+    .btn.active { background: linear-gradient(135deg, #0284c7, #2563eb); border-color: #38bdf8; color: #fff; }
+    .btn.accent { background: linear-gradient(135deg, #059669, #0d9488); border-color: #34d399; color: #fff; }
+    .btn.warn { background: linear-gradient(135deg, #d97706, #ea580c); border-color: #fbbf24; color: #fff; }
+
+    #labels-layer { position: fixed; inset: 0; pointer-events: none; z-index: 15; overflow: hidden; }
+    .part-label {
+      position: absolute; transform: translate(-50%, -100%);
+      padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 800;
+      background: rgba(15, 23, 42, 0.90); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.65);
+      white-space: nowrap; pointer-events: none;
+    }
+
+    .loader-overlay {
+      position: fixed; inset: 0; z-index: 80;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: rgba(2, 6, 23, 0.92); backdrop-filter: blur(8px); transition: opacity 0.3s ease;
+    }
+    .loader-box {
+      background: #0f172a; border: 1px solid #38bdf8; padding: 20px 26px;
+      border-radius: 16px; text-align: center; max-width: 350px; width: 88%;
+    }
+    .progress-bar { width: 100%; height: 8px; background: #1e293b; border-radius: 99px; overflow: hidden; margin-top: 10px; }
+    .progress-fill { height: 100%; width: 20%; background: linear-gradient(90deg, #38bdf8, #22c55e); transition: width 0.2s ease; }
+
+    @media (max-width: 820px) {
+      .header { padding: 5px 9px; top: 6px; left: 8px; right: 8px; }
+      .title { font-size: 11.2px; max-width: 39vw; }
+      .header-actions .btn { padding: 4px 7px; font-size: 9.8px; }
+      .side-panel { width: calc(100vw - 16px); top: 48px; left: 8px; max-height: calc(100vh - 104px); }
+      .controls { bottom: 6px; padding: 4px 6px; }
+      .controls .btn { padding: 4px 8px; font-size: 9.8px; }
+    }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="header">
+    <div class="title">🛠️ CFES 24"×22" Replica (8mm Acrylic + FDM Pack)</div>
+    <div class="header-actions">
+      <button class="btn" onclick="togglePanel()">📦 BOM &amp; STLs</button>
+      <button class="btn" onclick="toggleLaserModal(true)">📐 8mm DXF</button>
+      <a class="btn accent" href="./CFES_24x22in_FDM_STL_OBJ_and_8mm_Acrylic_Pack.zip" download>⬇ ZIP</a>
+    </div>
+  </div>
+
+  <div class="side-panel collapsed" id="sidePanel">
+    <div class="panel-title">
+      <span>CFES Physical Replica — Print &amp; Laser Pack</span>
+      <button class="btn" style="padding:2px 7px;font-size:10px;" onclick="togglePanel()">✕</button>
+    </div>
+    <div class="spec-grid">
+      <div class="spec-card">
+        <div class="spec-k">Room Outer Footprint</div>
+        <div class="spec-v">24.0" × 22.0" × 14.0"</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-k">8mm Black Base</div>
+        <div class="spec-v">26.0" × 24.0" (Grooved)</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-k">Walls (8mm Acrylic)</div>
+        <div class="spec-v">Left + Right + Back</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-k">Printing Lead</div>
+        <div class="spec-v">Krishna Kumar (21 pcs)</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:8px;">
+      <a class="btn accent" style="width:100%;justify-content:center;padding:7px;" href="./CFES_24x22in_FDM_STL_OBJ_and_8mm_Acrylic_Pack.zip" download>
+        ⬇ Download Complete STL + OBJ + 8mm DXF Pack (.ZIP)
+      </a>
+    </div>
+
+    <div class="sec-head">1. 8mm Acrylic Laser / CNC Cut Files (1:1 mm)</div>
+    <div class="dl-list" id="acrylicList"></div>
+
+    <div class="sec-head">2. Zero-Support Modular FDM Parts (STL &amp; OBJ)</div>
+    <div class="dl-list" id="fdmList"></div>
+  </div>
+
+  <div class="modal-overlay" id="laserModal" onclick="if(event.target===this)toggleLaserModal(false)">
+    <div class="modal-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+        <div style="font-weight:800;color:#38bdf8;font-size:13px;">8mm Cast Acrylic Laser/CNC Sheet — 26"×24" Black Grooved Base + Left, Right &amp; Back Walls (1:1 mm)</div>
+        <div style="display:flex;gap:6px;">
+          <a class="btn accent" href="./acrylic_8mm/CFES_8mm_Acrylic_OptionA_CO2_Laser_ThroughSlot_1to1_mm.dxf" download>⬇ Option A: CO2 Laser DXF</a>
+          <a class="btn warn" href="./acrylic_8mm/CFES_8mm_Acrylic_OptionB_CNC_5mm_BlindGroove_1to1_mm.dxf" download>⬇ Option B: CNC 5mm Groove DXF</a>
+          <button class="btn" onclick="toggleLaserModal(false)">✕</button>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:#090f1d;border:1px solid #334155;border-radius:10px;padding:8px;overflow-x:auto;">
+        <img src="./acrylic_8mm/CFES_8mm_Acrylic_OptionA_CO2_Laser_ThroughSlot_1to1_mm.svg" style="width:100%;min-width:680px;display:block;" alt="8mm Acrylic Laser Blueprint" />
+      </div>
+      <div style="margin-top:8px;font-size:11px;color:#cbd5e1;line-height:1.45;">
+        • <strong>Base Plate (Panel 1)</strong>: <code>26.0" × 24.0" (660.4 × 609.6 mm)</code> <strong>8mm Black Cast Acrylic</strong> with <code>8.20 mm</code> mortise/groove channels + laser-etched footprints for every 3D-printed cabinet &amp; motor pedestal.<br/>
+        • <strong>Left, Right &amp; Back Walls (Panels 2–4)</strong>: <strong>8mm Acrylic</strong> (Back: <code>609.6 × 355.6 mm</code>, Sides: <code>550.8 × 355.6 mm</code>) — slots directly into the base grooves and seals cleanly with acrylic chloroform/cyanoacrylate bind adhesive.
+      </div>
+    </div>
+  </div>
+
+  <div class="loader-overlay" id="loader">
+    <div class="loader-box">
+      <div style="font-size:14px;font-weight:800;color:#38bdf8;">Loading 24"×22" CFES Physical Replica...</div>
+      <div style="font-size:11.5px;color:#94a3b8;margin-top:4px;" id="loadStatus">Loading 16 FDM STL Meshes &amp; 8mm Grooved Acrylic Enclosure...</div>
+      <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+    </div>
+  </div>
+
+  <div id="labels-layer"></div>
+  <div id="canvas-container"></div>
+
+  <div class="controls">
+    <button class="btn warn" id="btnExplode" onclick="toggleExplode()">🔧 Explode Grooves &amp; FDM Parts</button>
+    <button class="btn active" id="btnWalls" onclick="cycleWallStyle()">🧊 8mm Walls: Translucent</button>
+    <button class="btn" id="btnLabels" onclick="toggleLabels()">🏷️ Part IDs</button>
+    <button class="btn" onclick="setCam('iso')">🧭 Isometric</button>
+    <button class="btn" onclick="setCam('front')">👀 Front Lab View</button>
+    <button class="btn" onclick="setCam('top')">📐 Top Layout (26"×24")</button>
+    <button class="btn" onclick="setCam('groove')">🔍 Groove Fitment</button>
+  </div>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { STLLoader } from 'three/addons/loaders/STLLoader.js';
+
+    // Exact 1:1 Millimeter Scene Coordinates (1 Three.js unit = 1.0 mm)
+    // Black Base: 660.4 mm (26.0" X) × 609.6 mm (24.0" Z) × 8.0 mm thick (Y: -8 .. 0)
+    // Room Outer Enclosure: 609.6 mm (24.0" X: -304.8..+304.8) × 558.8 mm (22.0" Z: -279.4..+279.4)
+    // Exposed Wall Height: 355.6 mm (14.0" Y: 0..355.6), Groove Depth: 5.5 mm into 8mm Black Base!
+    const BASE_W = 660.4, BASE_D = 609.6, BASE_T = 8.0;
+    const ROOM_W = 609.6, ROOM_D = 558.8, ROOM_H = 355.6, WALL_T = 8.0;
+
+    let scene, camera, renderer, controls;
+    let explodeTarget = 0, explodeVal = 0;
+    let wallStyle = 0; // 0 = Translucent Lab White/Tint, 1 = Solid White Acrylic, 2 = Hidden
+    let showLabels = false;
+
+    const wallMeshes = [];
+    const movableItems = []; // { obj, basePos: Vector3, explodeOffset: Vector3, label, id }
+    const labelEls = [];
+
+    const container = document.getElementById('canvas-container');
+    const labelsLayer = document.getElementById('labels-layer');
+
+    function makeBaseEtchTexture() {
+      const c = document.createElement('canvas');
+      c.width = 1320; c.height = 1220;
+      const ctx = c.getContext('2d');
+      const sx = c.width / BASE_W, sz = c.height / BASE_D;
+      const toX = (xMm) => (xMm + BASE_W / 2) * sx;
+      const toZ = (zMm) => (zMm + BASE_D / 2) * sz;
+
+      // Glossy Cast Black Acrylic Base
+      ctx.fillStyle = '#0b0f17';
+      ctx.fillRect(0, 0, c.width, c.height);
+
+      // Subtle ruler ticks along 26" × 24" outer 1-inch margin
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(4, 4, c.width - 8, c.height - 8);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = 'bold 21px Segoe UI, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('◀───  26.0 INCHES (660.4 mm) — 8mm BLACK CAST ACRYLIC BASE  ───▶', c.width / 2, c.height - 14);
+
+      ctx.save();
+      ctx.translate(24, c.height / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText('◀───  24.0 INCHES (609.6 mm)  ───▶', 0, 0);
+      ctx.restore();
+
+      // 8.2mm Precision Machined/Laser Groove Channels (Highlighted Cyan/Blue slot!)
+      ctx.fillStyle = '#082f49';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2.5;
+      // Back groove (Z: -279.4 .. -271.2, X: -304.8 .. +304.8)
+      const gx0 = toX(-304.8), gz0 = toZ(-279.4);
+      ctx.fillRect(gx0, gz0, 609.6 * sx, 8.2 * sz);
+      ctx.strokeRect(gx0, gz0, 609.6 * sx, 8.2 * sz);
+      // Left groove
+      ctx.fillRect(toX(-304.8), toZ(-271.2), 8.2 * sx, 550.6 * sz);
+      ctx.strokeRect(toX(-304.8), toZ(-271.2), 8.2 * sx, 550.6 * sz);
+      // Right groove
+      ctx.fillRect(toX(304.8 - 8.2), toZ(-271.2), 8.2 * sx, 550.6 * sz);
+      ctx.strokeRect(toX(304.8 - 8.2), toZ(-271.2), 8.2 * sx, 550.6 * sz);
+
+      // Interior light-grey floor grid + Yellow/Black Safety Hazard Stripe around Center Test Table
+      ctx.strokeStyle = 'rgba(148,163,184,0.16)';
+      ctx.lineWidth = 1.5;
+      for (let x = -250; x <= 250; x += 50) {
+        ctx.beginPath(); ctx.moveTo(toX(x), toZ(-270)); ctx.lineTo(toX(x), toZ(278)); ctx.stroke();
+      }
+      for (let z = -250; z <= 250; z += 50) {
+        ctx.beginPath(); ctx.moveTo(toX(-295), toZ(z)); ctx.lineTo(toX(295), toZ(z)); ctx.stroke();
+      }
+
+      // Yellow-Black hazard border around table
+      const hx0 = toX(-195), hz0 = toZ(-60), hw = 390 * sx, hd = 215 * sz;
+      ctx.strokeStyle = '#facc15';
+      ctx.lineWidth = 9;
+      ctx.setLineDash([18, 14]);
+      ctx.strokeRect(hx0, hz0, hw, hd);
+      ctx.setLineDash([]);
+
+      // Laser-etched green placement outlines for FDM parts
+      const drawEtch = (cx, cz, w, d, txt) => {
+        ctx.strokeStyle = '#10b981';
+        ctx.lineWidth = 2.2;
+        ctx.setLineDash([8, 6]);
+        ctx.strokeRect(toX(cx - w / 2), toZ(cz - d / 2), w * sx, d * sz);
+        ctx.setLineDash([]);
+        ctx.fillStyle = '#34d399';
+        ctx.font = 'bold 15px monospace';
+        ctx.fillText(txt, toX(cx), toZ(cz) + 5);
+      };
+      drawEtch(-112, 48, 92, 136, '01 LEFT PEDESTAL');
+      drawEtch(112, 48, 92, 136, '01 RIGHT PEDESTAL');
+      drawEtch(0, -46, 216, 52, '08 GAUGE CONSOLE');
+      drawEtch(-215, -195, 94, 80, '09 POWER CABINET');
+      drawEtch(196, -196, 132, 78, '10 BENCH CABINET');
+
+      const tex = new THREE.CanvasTexture(c);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.anisotropy = 8;
+      return tex;
+    }
+
+    function makeBackWallTexture() {
+      const c = document.createElement('canvas');
+      c.width = 1220; c.height = 720;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#ecebe6';
+      ctx.fillRect(0, 0, c.width, c.height);
+      // Blue industrial lower dado stripe
+      ctx.fillStyle = '#4b7ea8';
+      ctx.fillRect(0, c.height - 150, c.width, 150);
+      // CFEES Power & Motor Test Lab Schematic (matching GitHub 3D model!)
+      ctx.fillStyle = '#3b76a8';
+      ctx.font = '900 58px monospace';
+      ctx.fillText('CFEES', 370, 155);
+      ctx.font = 'bold 28px monospace';
+      ctx.fillText('POWER & MOTOR TEST LAB', 370, 195);
+
+      ctx.strokeStyle = '#1d6fa5';
+      ctx.lineWidth = 5;
+      ctx.strokeRect(365, 220, 480, 145);
+      // Motor -> Torque Box -> Generator schematic
+      ctx.strokeRect(405, 255, 130, 68);
+      for (let i = 0; i < 7; i++) {
+        ctx.beginPath(); ctx.moveTo(422 + i * 16, 263); ctx.lineTo(422 + i * 16, 315); ctx.stroke();
+      }
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillRect(580, 270, 52, 38);
+      ctx.strokeRect(675, 255, 130, 68);
+      for (let i = 0; i < 7; i++) {
+        ctx.beginPath(); ctx.moveTo(692 + i * 16, 263); ctx.lineTo(692 + i * 16, 315); ctx.stroke();
+      }
+      ctx.beginPath(); ctx.moveTo(535, 289); ctx.lineTo(580, 289); ctx.moveTo(632, 289); ctx.lineTo(675, 289); ctx.stroke();
+
+      const tex = new THREE.CanvasTexture(c);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      return tex;
+    }
+
+    function buildAcrylicEnclosure() {
+      // 1) 26" × 24" (660.4 × 609.6 mm) × 8mm Black Cast Acrylic Base
+      const baseTopMat = new THREE.MeshStandardMaterial({ map: makeBaseEtchTexture(), roughness: 0.25, metalness: 0.1 });
+      const baseSideMat = new THREE.MeshStandardMaterial({ color: 0x090d16, roughness: 0.2, metalness: 0.15 });
+      const baseMesh = new THREE.Mesh(
+        new THREE.BoxGeometry(BASE_W, BASE_T, BASE_D),
+        [baseSideMat, baseSideMat, baseTopMat, baseSideMat, baseSideMat, baseSideMat]
+      );
+      baseMesh.position.set(0, -BASE_T / 2, 0);
+      baseMesh.receiveShadow = true;
+      scene.add(baseMesh);
+
+      // 2) Back Wall (8mm thick, 609.6 mm wide × 361.1 mm total height w/ 5.5mm groove tongue into base!)
+      const backTex = makeBackWallTexture();
+      const wallTranslucentMat = new THREE.MeshPhysicalMaterial({
+        map: backTex,
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.86,
+        roughness: 0.18,
+        side: THREE.DoubleSide
+      });
+      const sideWallMat = new THREE.MeshPhysicalMaterial({
+        color: 0xe2e8f0,
+        transparent: true,
+        opacity: 0.52,
+        roughness: 0.12,
+        transmission: 0.25,
+        side: THREE.DoubleSide
+      });
+      const edgeHighlight = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.65 });
+
+      const backGeo = new THREE.BoxGeometry(ROOM_W, ROOM_H + 5.5, WALL_T);
+      const backWall = new THREE.Mesh(backGeo, wallTranslucentMat);
+      const backPos = new THREE.Vector3(0, (ROOM_H - 5.5) / 2, -ROOM_D / 2 + WALL_T / 2);
+      backWall.position.copy(backPos);
+      backWall.add(new THREE.LineSegments(new THREE.EdgesGeometry(backGeo), edgeHighlight));
+      scene.add(backWall);
+      wallMeshes.push(backWall);
+      movableItems.push({
+        obj: backWall,
+        basePos: backPos.clone(),
+        explodeOffset: new THREE.Vector3(0, 95, -85),
+        label: '8mm Back Acrylic Wall (24"×14" Groove-Fit)'
+      });
+
+      // 3) Left & Right 8mm Acrylic Walls (550.8 mm depth × 361.1 mm height)
+      const sideGeo = new THREE.BoxGeometry(WALL_T, ROOM_H + 5.5, ROOM_D - WALL_T);
+      for (const s of [-1, 1]) {
+        const sw = new THREE.Mesh(sideGeo, sideWallMat.clone());
+        const sp = new THREE.Vector3(s * (ROOM_W / 2 - WALL_T / 2), (ROOM_H - 5.5) / 2, WALL_T / 2);
+        sw.position.copy(sp);
+        sw.add(new THREE.LineSegments(new THREE.EdgesGeometry(sideGeo), edgeHighlight));
+        scene.add(sw);
+        wallMeshes.push(sw);
+        movableItems.push({
+          obj: sw,
+          basePos: sp.clone(),
+          explodeOffset: new THREE.Vector3(s * 95, 95, 0),
+          label: s < 0 ? '8mm Left Acrylic Wall (Groove-Fit)' : '8mm Right Acrylic Wall (Groove-Fit)'
+        });
+      }
+    }
+
+    function fitCameraForScreen() {
+      const aspect = window.innerWidth / Math.max(1, window.innerHeight);
+      camera.fov = aspect < 0.85 ? 54 : 42;
+      camera.aspect = aspect;
+      camera.updateProjectionMatrix();
+      const mult = aspect < 0.85 ? Math.min(2.15, 0.92 / Math.max(0.40, aspect)) : (aspect < 1.2 ? 1.16 : 0.96);
+      camera.position.set(420 * mult, 430 * mult, 690 * mult);
+      controls.target.set(0, 125, -10);
+      controls.update();
+    }
+
+    async function init() {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 2, 5000);
+      renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.15;
+      container.appendChild(renderer.domElement);
+
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.06;
+      controls.maxPolarAngle = Math.PI * 0.495;
+      controls.minDistance = 120;
+      controls.maxDistance = 2600;
+
+      scene.add(new THREE.AmbientLight(0xffffff, 0.95));
+      const sun = new THREE.DirectionalLight(0xfffbeb, 1.55);
+      sun.position.set(350, 680, 520);
+      sun.castShadow = true;
+      scene.add(sun);
+      const fill = new THREE.DirectionalLight(0x93c5fd, 0.55);
+      fill.position.set(-420, 320, -350);
+      scene.add(fill);
+
+      buildAcrylicEnclosure();
+
+      const manifest = await fetch('./manifest.json').then(r => r.json());
+      populateDrawer(manifest);
+
+      const stlLoader = new STLLoader();
+      let loadedCount = 0;
+
+      // Exact placement map for all 16 generated STL files inside the 24" × 22" room
+      const placementSpec = {
+        '01': [
+          { pos: [-112, 0, 48], mode: 'zup', exp: [-35, 45, 30] },
+          { pos: [112, 0, 48], mode: 'zup', exp: [35, 45, 30] }
+        ],
+        '02A': [{ pos: [-85, 110, 48], mode: 'zup', exp: [-25, 95, 30] }],
+        '02B': [{ pos: [85, 110, 48], mode: 'zup', exp: [25, 95, 30] }],
+        '03': [{ pos: [-106, 120, 48], mode: 'zup', exp: [-45, 155, 30] }],
+        '04': [{ pos: [106, 120, 48], mode: 'zup', exp: [45, 155, 30] }],
+        '05': [{ pos: [0, 122.5, 48], mode: 'zup', exp: [0, 155, 30] }],
+        '06': [{ pos: [0, 170.5, 48], mode: 'zup', exp: [0, 215, 30] }],
+        '07': [
+          { pos: [-39, 158, 48], mode: 'shaft', exp: [-22, 185, 30] },
+          { pos: [57, 158, 48], mode: 'shaft', exp: [22, 185, 30] }
+        ],
+        '08': [{ pos: [0, 71, -46], mode: 'flatback', exp: [0, 85, -20] }],
+        '09A': [{ pos: [-215, 0, -195], mode: 'zup', exp: [-35, 35, -35] }],
+        '09B': [{ pos: [-215, 126, -195], mode: 'zup', exp: [-35, 105, -35] }],
+        '10': [{ pos: [196, 0, -196], mode: 'zup', exp: [35, 35, -35] }],
+        '11': [{ pos: [196, 108, -196], mode: 'zup', exp: [35, 115, -35] }],
+        '12': [{ pos: [95, 290, -271], mode: 'flatback', exp: [0, 110, -45] }],
+        '13': [
+          { pos: [-296.5, 195, 10], mode: 'leftwall', exp: [-65, 95, 0] },
+          { pos: [296.5, 195, 10], mode: 'rightwall', exp: [65, 95, 0] }
+        ],
+        '14': [
+          { pos: [-274, 0, -248], mode: 'zup', exp: [-40, 40, -40] },
+          { pos: [274, 0, -248], mode: 'zup_r90', exp: [40, 40, -40] }
+        ]
+      };
+
+      for (const part of manifest.fdmParts) {
+        const geo = await stlLoader.loadAsync(`./stl/${part.stlName}`);
+        geo.computeVertexNormals();
+        const mat = new THREE.MeshStandardMaterial({
+          color: new THREE.Color(part.color),
+          roughness: 0.36,
+          metalness: 0.14
+        });
+
+        const slots = placementSpec[part.id] || [];
+        slots.forEach((sl, idx) => {
+          const holder = new THREE.Group();
+          const mesh = new THREE.Mesh(geo, mat);
+          mesh.castShadow = true;
+          mesh.receiveShadow = true;
+
+          if (sl.mode === 'zup') {
+            mesh.rotation.x = -Math.PI / 2;
+          } else if (sl.mode === 'zup_r90') {
+            mesh.rotation.x = -Math.PI / 2;
+            holder.rotation.y = -Math.PI / 2;
+          } else if (sl.mode === 'flatback') {
+            // Slicer (X, Y_up, Z_front) matches Three.js (X, Y, Z)! Center Y needs +sizeY/2 if grounded on Z=0
+            mesh.position.set(0, 0, 0);
+          } else if (sl.mode === 'shaft') {
+            mesh.rotation.z = Math.PI / 2;
+          } else if (sl.mode === 'leftwall') {
+            mesh.rotation.y = Math.PI / 2;
+          } else if (sl.mode === 'rightwall') {
+            mesh.rotation.y = -Math.PI / 2;
+          }
+
+          holder.add(mesh);
+          holder.position.set(sl.pos[0], sl.pos[1], sl.pos[2]);
+          scene.add(holder);
+
+          movableItems.push({
+            obj: holder,
+            basePos: new THREE.Vector3(...sl.pos),
+            explodeOffset: new THREE.Vector3(...sl.exp),
+            label: idx === 0 ? `#${part.id} ${part.title}` : null
+          });
+        });
+
+        loadedCount++;
+        document.getElementById('progFill').style.width = Math.round((loadedCount / manifest.fdmParts.length) * 100) + '%';
+      }
+
+      // Build floating labels (hidden by default for clean FOV!)
+      for (const it of movableItems) {
+        if (!it.label) continue;
+        const div = document.createElement('div');
+        div.className = 'part-label';
+        div.textContent = it.label;
+        div.style.display = 'none';
+        labelsLayer.appendChild(div);
+        labelEls.push({ el: div, item: it });
+      }
+
+      fitCameraForScreen();
+      setTimeout(() => {
+        const ld = document.getElementById('loader');
+        ld.style.opacity = '0';
+        setTimeout(() => ld.remove(), 300);
+      }, 200);
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      animate();
+    }
+
+    function populateDrawer(manifest) {
+      const acrEl = document.getElementById('acrylicList');
+      for (const f of manifest.acrylicFiles) {
+        const ext = f.name.endsWith('.dxf') ? 'DXF' : 'SVG';
+        const row = document.createElement('div');
+        row.className = 'dl-card';
+        row.innerHTML = `
+          <div class="dl-info">
+            <div class="dl-name">${f.name}</div>
+            <div class="dl-meta">${f.desc}</div>
+          </div>
+          <div class="dl-btns">
+            <a class="mini-btn dxf" href="./acrylic_8mm/${f.name}" download>⬇ ${ext}</a>
+          </div>`;
+        acrEl.appendChild(row);
+      }
+
+      const fdmEl = document.getElementById('fdmList');
+      for (const p of manifest.fdmParts) {
+        const row = document.createElement('div');
+        row.className = 'dl-card';
+        row.innerHTML = `
+          <div class="dl-info">
+            <div class="dl-name">#${p.id} ${p.title}</div>
+            <div class="dl-meta">${p.sizeMm.join('×')} mm • Qty: ${p.qty}× • ~${p.estGrams * p.qty}g • ${p.filament}</div>
+          </div>
+          <div class="dl-btns">
+            <a class="mini-btn" href="./stl/${p.stlName}" download>STL</a>
+            <a class="mini-btn obj" href="./obj/${p.objName}" download>OBJ</a>
+          </div>`;
+        fdmEl.appendChild(row);
+      }
+    }
+
+    function updateLabels() {
+      const placed = [];
+      for (const l of labelEls) {
+        if (!showLabels) { l.el.style.display = 'none'; continue; }
+        const p = l.item.obj.position.clone();
+        p.y += 45;
+        p.project(camera);
+        if (p.z > 1) { l.el.style.display = 'none'; continue; }
+        const sx = (p.x * 0.5 + 0.5) * window.innerWidth;
+        const sy = (-p.y * 0.5 + 0.5) * window.innerHeight;
+        if (sy < 54 || sy > window.innerHeight - 54) { l.el.style.display = 'none'; continue; }
+        let hit = false;
+        for (const q of placed) {
+          if (Math.abs(sx - q.x) < 115 && Math.abs(sy - q.y) < 22) { hit = true; break; }
+        }
+        if (hit) { l.el.style.display = 'none'; continue; }
+        placed.push({ x: sx, y: sy });
+        l.el.style.display = 'block';
+        l.el.style.left = sx + 'px';
+        l.el.style.top = sy + 'px';
+      }
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (Math.abs(explodeTarget - explodeVal) > 0.004) {
+        explodeVal += (explodeTarget - explodeVal) * 0.09;
+        for (const it of movableItems) {
+          it.obj.position.copy(it.basePos).addScaledVector(it.explodeOffset, explodeVal);
+        }
+      }
+      controls.update();
+      renderer.render(scene, camera);
+      updateLabels();
+    }
+
+    window.togglePanel = () => document.getElementById('sidePanel').classList.toggle('collapsed');
+    window.toggleLaserModal = (open) => document.getElementById('laserModal').classList.toggle('open', open);
+
+    window.toggleExplode = () => {
+      explodeTarget = explodeTarget > 0.5 ? 0 : 1;
+      const btn = document.getElementById('btnExplode');
+      btn.classList.toggle('active', explodeTarget > 0.5);
+      btn.textContent = explodeTarget > 0.5 ? '🔩 Assemble into 8mm Grooves' : '🔧 Explode Grooves & FDM Parts';
+    };
+
+    window.cycleWallStyle = () => {
+      wallStyle = (wallStyle + 1) % 3;
+      const btn = document.getElementById('btnWalls');
+      if (wallStyle === 0) {
+        wallMeshes.forEach((w, i) => { w.visible = true; w.material.opacity = i === 0 ? 0.86 : 0.52; w.material.transparent = true; });
+        btn.textContent = '🧊 8mm Walls: Translucent';
+        btn.classList.add('active');
+      } else if (wallStyle === 1) {
+        wallMeshes.forEach((w) => { w.visible = true; w.material.opacity = 1.0; w.material.transparent = false; });
+        btn.textContent = '🧱 8mm Walls: Opaque';
+        btn.classList.add('active');
+      } else {
+        wallMeshes.forEach((w) => { w.visible = false; });
+        btn.textContent = '👁️ 8mm Walls: Hidden';
+        btn.classList.remove('active');
+      }
+    };
+
+    window.toggleLabels = () => {
+      showLabels = !showLabels;
+      document.getElementById('btnLabels').classList.toggle('active', showLabels);
+    };
+
+    window.setCam = (mode) => {
+      if (mode === 'iso') { fitCameraForScreen(); return; }
+      if (mode === 'front') {
+        camera.position.set(0, 235, 760);
+        controls.target.set(0, 135, -20);
+      } else if (mode === 'top') {
+        camera.position.set(0, 1020, 10);
+        controls.target.set(0, 20, 0);
+      } else if (mode === 'groove') {
+        explodeTarget = 1;
+        document.getElementById('btnExplode').textContent = '🔩 Assemble into 8mm Grooves';
+        camera.position.set(-460, 260, 420);
+        controls.target.set(-220, 60, -120);
+      }
+      controls.update();
+    };
+
+    init();
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2620mm" height="700mm" viewBox="0 0 2620 700">
+<rect x="0" y="0" width="2620" height="700" fill="#090f1d"/>
+<rect x="30.000" y="50.400" width="660.400" height="609.600" fill="none" stroke="#ef4444" stroke-width="0.9"/>
+<rect x="55.400" y="75.800" width="609.600" height="558.800" fill="none" stroke="#10b981" stroke-width="0.9" stroke-dasharray="4,3"/>
+<rect x="55.400" y="75.800" width="609.600" height="8.200" fill="rgba(59,130,246,0.18)" stroke="#3b82f6" stroke-width="0.9"/>
+<rect x="55.400" y="84.000" width="8.200" height="550.600" fill="rgba(59,130,246,0.18)" stroke="#3b82f6" stroke-width="0.9"/>
+<rect x="656.800" y="84.000" width="8.200" height="550.600" fill="rgba(59,130,246,0.18)" stroke="#3b82f6" stroke-width="0.9"/>
+<rect x="165.200" y="275.200" width="390.000" height="215.000" fill="none" stroke="#10b981" stroke-width="0.9" stroke-dasharray="4,3"/>
+<rect x="202.200" y="335.200" width="92.000" height="136.000" fill="none" stroke="#10b981" stroke-width="0.9" stroke-dasharray="4,3"/>
+<rect x="426.200" y="335.200" width="92.000" height="136.000" fill="none" stroke="#10b981" stroke-width="0.9" stroke-dasharray="4,3"/>
+<rect x="252.200" y="283.200" width="216.000" height="52.000" fill="none" stroke="#10b981" stroke-width="0.9" stroke-dasharray="4,3"/>
+<rect x="98.200" y="120.200" width="94.000" height="80.000" fill="none" stroke="#10b981" stroke-width="0.9" stroke-dasharray="4,3"/>
+<rect x="490.200" y="120.200" width="132.000" height="78.000" fill="none" stroke="#10b981" stroke-width="0.9" stroke-dasharray="4,3"/>
+<rect x="730.000" y="184.400" width="609.600" height="360.600" fill="none" stroke="#ef4444" stroke-width="0.9"/>
+<rect x="925.000" y="301.000" width="220.000" height="64.000" fill="none" stroke="#10b981" stroke-width="0.9" stroke-dasharray="4,3"/>
+<rect x="945.000" y="317.000" width="55.000" height="28.000" fill="none" stroke="#10b981" stroke-width="0.9" stroke-dasharray="4,3"/>
+<rect x="1022.000" y="323.000" width="26.000" height="16.000" fill="none" stroke="#10b981" stroke-width="0.9" stroke-dasharray="4,3"/>
+<rect x="1070.000" y="317.000" width="55.000" height="28.000" fill="none" stroke="#10b981" stroke-width="0.9" stroke-dasharray="4,3"/>
+<rect x="1061.000" y="220.000" width="124.000" height="38.000" fill="none" stroke="#10b981" stroke-width="0.9" stroke-dasharray="4,3"/>
+<rect x="1380.000" y="184.400" width="550.800" height="360.600" fill="none" stroke="#ef4444" stroke-width="0.9"/>
+<rect x="1590.000" y="315.000" width="122.000" height="80.000" fill="none" stroke="#10b981" stroke-width="0.9" stroke-dasharray="4,3"/>
+<rect x="1975.000" y="184.400" width="550.800" height="360.600" fill="none" stroke="#ef4444" stroke-width="0.9"/>
+<rect x="2193.000" y="315.000" width="122.000" height="80.000" fill="none" stroke="#10b981" stroke-width="0.9" stroke-dasharray="4,3"/>
+<line x1="730.000" y1="540.000" x2="1339.600" y2="540.000" stroke="#10b981" stroke-width="0.7"/>
+<line x1="1000.000" y1="331.000" x2="1022.000" y2="331.000" stroke="#10b981" stroke-width="0.7"/>
+<line x1="1048.000" y1="331.000" x2="1070.000" y2="331.000" stroke="#10b981" stroke-width="0.7"/>
+<line x1="1380.000" y1="540.000" x2="1930.800" y2="540.000" stroke="#10b981" stroke-width="0.7"/>
+<line x1="1975.000" y1="540.000" x2="2525.800" y2="540.000" stroke="#10b981" stroke-width="0.7"/>
+<circle cx="360.200" cy="403.200" r="8.000" fill="none" stroke="#ef4444" stroke-width="0.9"/>
+<circle cx="1225.000" cy="244.000" r="26.000" fill="none" stroke="#10b981" stroke-width="0.9"/>
+<circle cx="1805.000" cy="288.000" r="4.000" fill="none" stroke="#10b981" stroke-width="0.9"/>
+<circle cx="2100.000" cy="288.000" r="4.000" fill="none" stroke="#10b981" stroke-width="0.9"/>
+<text x="30.000" y="36.400" fill="#eab308" font-family="monospace" font-weight="bold" font-size="10.5">PANEL 1: 26.0"x24.0" (660.4x609.6mm) 8mm BLACK ACRYLIC BASE [CNC_BLIND_GROOVE]</text>
+<text x="210.200" y="405.200" fill="#10b981" font-family="monospace" font-weight="bold" font-size="6.5">01 LEFT PEDESTAL</text>
+<text x="434.200" y="405.200" fill="#10b981" font-family="monospace" font-weight="bold" font-size="6.5">01 RIGHT PEDESTAL</text>
+<text x="298.200" y="311.200" fill="#10b981" font-family="monospace" font-weight="bold" font-size="6.5">08 GAUGE CONSOLE</text>
+<text x="105.200" y="162.200" fill="#10b981" font-family="monospace" font-weight="bold" font-size="6">09 POWER CABINET</text>
+<text x="502.200" y="162.200" fill="#10b981" font-family="monospace" font-weight="bold" font-size="6">10 BENCH CABINET</text>
+<text x="250.200" y="651.000" fill="#10b981" font-family="monospace" font-weight="bold" font-size="8.5">OPEN FRONT — 24.0" x 22.0" CFES PHYSICAL REPLICA</text>
+<text x="730.000" y="170.400" fill="#eab308" font-family="monospace" font-weight="bold" font-size="9.5">PANEL 2: BACK WALL — 609.6 x 355.6 mm (24.0" x 14.0") — 8mm ACRYLIC</text>
+<text x="945.000" y="265.000" fill="#10b981" font-family="monospace" font-weight="bold" font-size="20">CFEES</text>
+<text x="945.000" y="288.000" fill="#10b981" font-family="monospace" font-weight="bold" font-size="11">POWER &amp; MOTOR TEST LAB</text>
+<text x="1380.000" y="170.400" fill="#eab308" font-family="monospace" font-weight="bold" font-size="9.5">PANEL 3: LEFT WALL — 550.8 x 355.6 mm (21.69" x 14.0") — 8mm ACRYLIC</text>
+<text x="1615.000" y="358.000" fill="#10b981" font-family="monospace" font-weight="bold" font-size="7.5">13 WINDOW BEZEL</text>
+<text x="1975.000" y="170.400" fill="#eab308" font-family="monospace" font-weight="bold" font-size="9.5">PANEL 4: RIGHT WALL — 550.8 x 355.6 mm (21.69" x 14.0") — 8mm ACRYLIC</text>
+<text x="2218.000" y="358.000" fill="#10b981" font-family="monospace" font-weight="bold" font-size="7.5">13 WINDOW BEZEL</text>
+<text x="30.000" y="686.000" fill="#eab308" font-family="monospace" font-weight="bold" font-size="11">autoAbode DRDO CFES 24"x22" Physical Replica | Scale 1:1 Millimeters | RED = Cut Through 8mm | BLUE = 5mm Groove Pocket | GREEN = Laser Etch Guide</text>
+</svg>
